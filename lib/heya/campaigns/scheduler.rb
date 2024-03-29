@@ -60,7 +60,7 @@ module Heya
         ActiveRecord::Base.transaction do
           return if CampaignReceipt.where(user: user, step_gid: step.gid).exists?
 
-          if step.in_segment?(user)
+          if step.in_segment?(user) && step.in_business_hours?
             now = Time.now.utc
             Queries::MembershipsForUpdate.call(campaign, user).update_all(last_sent_at: now)
             CampaignReceipt.create!(user: user, step_gid: step.gid, sent_at: now)

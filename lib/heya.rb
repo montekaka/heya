@@ -46,4 +46,9 @@ module Heya
     return user.send(segment) if segment.is_a?(Symbol)
     segment.call(user)
   end
+
+  def in_business_hours?(business_hours)
+    return true if business_hours.nil?
+    return business_hours.send(Time.now.utc)
+  end
 end

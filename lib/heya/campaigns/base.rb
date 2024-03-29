@@ -144,7 +144,6 @@ module Heya
           raise "Invalid step name: #{step.name}\n  Step names must not conflict with method names on Heya::Campaigns::Base" if respond_to?(method_name)
 
           define_singleton_method method_name do |user|
-            step[:wait] = step[:wait].call(user) if step[:wait].is_a?(Proc)
             step.action.new(user: user, step: step).build
           end
           steps << step
